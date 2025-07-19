@@ -1,19 +1,19 @@
-import { Navigate, useLocation } from "react-router"
-import useAuthStore from "../store/auth.store"
+import { Navigate, useLocation } from 'react-router';
+import useAuthStore from '../store/auth.store';
 
 const ProtectedRoute = ({ children, requireRole = null }) => {
-  const { isAuthenticated, user } = useAuthStore()
-  const location = useLocation()
+	const { isAuthenticated, user } = useAuthStore();
+	const location = useLocation();
 
-  if (!isAuthenticated) {
-    return <Navigate to='/login' state={{ from: location }} replace />
-  }
+	if (!isAuthenticated()) {
+		return <Navigate to='/login' state={{ from: location }} replace />;
+	}
 
-  if (requireRole && user?.role !== requireRole) {
-    return <Navigate to='/dashboard' replace />
-  }
+	if (requireRole && user?.role !== requireRole) {
+		return <Navigate to='/dashboard' replace />;
+	}
 
-  return children
-}
+	return children;
+};
 
-export default ProtectedRoute
+export default ProtectedRoute;
